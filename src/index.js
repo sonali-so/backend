@@ -12,6 +12,8 @@ import connectDB from"./db";
 connectDB()*/
 // src/index.js
 
+
+
 // Fix for MaxListenersExceededWarning
 import { EventEmitter } from "events";
 EventEmitter.defaultMaxListeners = 20;

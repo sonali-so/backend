@@ -17,9 +17,8 @@ app.use(express.static("public")); // Serve static files from the "public" direc
 app.use(cookieParser());
 
 
-// Basic route
-app.get("/", (req, res) => {
-  res.send("API is working!");
-});
+import userRoutes from "./routes/user.routes.js";
+app.use("/api/users", userRoutes);
+
 
 export default app;
