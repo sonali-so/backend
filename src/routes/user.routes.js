@@ -1,19 +1,32 @@
-import{Router}from"express";
-import { registerUser } from "../controllers/user.controllers.js";
-import {upload} from "../middlewares/multer.middleware.js"
+import { Router } from "express";
+import { registerUser, loginUser, logoutUser,refreshAccessToken } from "../controllers/user.controllers.js"; 
+import { upload } from "../middlewares/multer.middleware.js";
+import { verifyJWT } from "../middlewares/auth.middleware.js"; // 👈 adjust path as needed
+// import { anotherMid } from "../middlewares/another.middleware.js"; // 👈 if you really have this
 
-const router=Router()
+const router = Router();
+
 router.route("/register").post(
     upload.fields([
         {
-            name:"avatar",
-            maxCount:1
-
+            name: "avatar",
+            maxCount: 1
         },
         {
-            name:"coverImage",
-            maxCount:1
+            name: "coverImage",
+            maxCount: 1
         }
     ]),
-    registerUser)
-export default router
+    registerUser
+);
+
+router.route("/login").post(loginUser);
+
+// secure routes
+router.route("/logout").post(
+    verifyJWT, 
+    logoutUser
+);
+router.route("/refresh-token").post(refreshAccessToken);
+
+export default router;
